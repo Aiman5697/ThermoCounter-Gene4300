@@ -43,6 +43,9 @@ void loop() {
   num++;
 
   if(cnt!=count || num < 1000) {
+    if(count<0) {
+      count = 0;
+    }
     Serial.print(count); Serial.print("\n");
     cnt = count;
     num = 0;
