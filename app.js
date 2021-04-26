@@ -15,7 +15,7 @@ const server = app
 var SerialPort = require("serialport");
 const Readline = require('@serialport/parser-readline');
 
-var arduinoCOMPort = "/dev/ttyACM0";
+var arduinoCOMPort = "/dev/ttyUSB0";
 
 var arduinoSerialPort = new SerialPort(arduinoCOMPort, {
   baudRate: 9600
