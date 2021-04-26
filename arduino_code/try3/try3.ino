@@ -11,7 +11,7 @@ bool range, sound, pass;
 int isObstacle = HIGH; // HIGH MEANS NO OBSTACLE
 int pirStat = 0;                   // PIR status
 int val_comp = 0;
-int count = 0, cnt = 1;
+int count = 0, num = 0, cnt = 1;
 int interval = 5000;
 unsigned char x=0;
 unsigned long previousMillis, currentMillis;
@@ -28,19 +28,24 @@ void setup() {
   pinMode(pirPin, INPUT);
   pinMode(isObstaclePin, INPUT);
 
+  delay(1000);
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   pirStat = digitalRead(pirPin);
+  delay(500);
   bool search = true;
   pass = true;
 
   int val_allow = filter(pirStat);
+  num++;
 
-  if(cnt!=count) {
+  if(cnt!=count || num < 1000) {
     Serial.print(count); Serial.print("\n");
     cnt = count;
+    num = 0;
   }
   
   if (pirStat && val_allow) {
