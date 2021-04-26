@@ -41,9 +41,9 @@ io.on('connection', (socket) => {
   console.log('Client connected');
   socket.on('disconnect', () => console.log('Client disconnected'));
 
-  parser.on('data', (vbat) => {
-    console.log('got word from arduino:', vbat);
-    socket.emit('vbat', vbat);
+  parser.on('data', (count) => {
+    console.log('got word from arduino:', count);
+    socket.emit('data', count);
   });
 
 });
