@@ -7,11 +7,11 @@ const int pingPin = 6; // Trigger Pin of Ultrasonic Sensor
 const int echoPin = 7; // Echo Pin of Ultrasonic Sensor
 const int buzzer = 3;//the pin of the active buzzer
 
-bool range, sound;
+bool range, sound, pass;
 int isObstacle = HIGH; // HIGH MEANS NO OBSTACLE
 int pirStat = 0;                   // PIR status
 int val_comp = 0;
-int count = 0;
+int count = 0, cnt = 1;
 int interval = 5000;
 unsigned char x=0;
 unsigned long previousMillis, currentMillis;
@@ -34,18 +34,23 @@ void loop() {
   // put your main code here, to run repeatedly:
   pirStat = digitalRead(pirPin);
   bool search = true;
+  pass = true;
 
   int val_allow = filter(pirStat);
+
+  if(cnt!=count) {
+    Serial.print(count); Serial.print("\n");
+    cnt = count;
+  }
   
   if (pirStat && val_allow) {
     previousMillis = millis();
     digitalWrite(led_3, HIGH);
 
-    if(count >= 3) {
+    if(count >= 2) {
       sound = true;
-      search = false;
+      pass = false;
       siren();
-      digitalWrite(led_3,LOW);
     }
     
     while(search) {
@@ -54,7 +59,7 @@ void loop() {
       range = ultraSonic();
       
       if(currentMillis - previousMillis < interval) {
-        if(!isObstacle) {
+        if(!isObstacle && pass) {
           digitalWrite(led_3,LOW);
           indLED(led_1);
           count++;
@@ -73,11 +78,6 @@ void loop() {
       }
     }
   }
-
-  if(Serial.available()) {
-    Serial.print(count); Serial.print("\n");
-  }
-  
 }
 
 bool ultraSonic() {

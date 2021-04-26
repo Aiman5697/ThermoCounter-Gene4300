@@ -12,16 +12,16 @@ const server = app
   .use((req, res) => res.sendFile(INDEX, { root: __dirname,}))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-var SerialPort = require("serialport");
+const SerialPort = require("serialport");
 const Readline = require('@serialport/parser-readline');
 
-var arduinoCOMPort = "/dev/ttyACM0";
+const arduinoCOMPort = "COM12";
 
-var arduinoSerialPort = new SerialPort(arduinoCOMPort, {
+const arduinoSerialPort = new SerialPort(arduinoCOMPort, {
   baudRate: 9600
 });
 
-const parser = arduinoSerialPort.pipe(new Readline());
+const parser = arduinoSerialPort.pipe(new Readline({ delimiter: '\n' }));
 
 arduinoSerialPort.on('error', function () {
   console.log('Serial Port ' + arduinoCOMPort + ' is not available');
@@ -42,8 +42,8 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => console.log('Client disconnected'));
 
   parser.on('data', (count) => {
-    console.log('got word from arduino:', count);
-    socket.emit('data', count);
+    // console.log('got word from arduino:', count);
+    io.sockets.emit('count', count);
   });
 
 });
