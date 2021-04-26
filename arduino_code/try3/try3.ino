@@ -144,6 +144,7 @@ void siren() {
 
     if(x>2) {
       sound = false;
+      x = 0;
     }
   }
 }
