@@ -47,7 +47,7 @@ void loop() {
     previousMillis = millis();
     digitalWrite(led_3, HIGH);
 
-    if(count >= 2) {
+    if(count >= 5) {
       sound = true;
       pass = false;
       siren();

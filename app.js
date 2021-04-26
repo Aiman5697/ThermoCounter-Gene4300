@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => console.log('Client disconnected'));
 
   parser.on('data', (count) => {
-    // console.log('got word from arduino:', count);
+    console.log('got word from arduino:', count);
     io.sockets.emit('count', count);
   });
 
