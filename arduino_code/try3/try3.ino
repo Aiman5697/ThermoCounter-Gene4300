@@ -1,7 +1,7 @@
 const int led_1 = 10;     //green
 const int led_2 = 11;     //red
 const int led_3 = 9;      //blue
-const int pirPin = 8;                 // PIR Out pin
+const int pirPin = 2;                 // PIR Out pin
 const int isObstaclePin = 5; // This is our input pin
 const int pingPin = 6; // Trigger Pin of Ultrasonic Sensor
 const int echoPin = 7; // Echo Pin of Ultrasonic Sensor

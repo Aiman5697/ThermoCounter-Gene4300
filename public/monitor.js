@@ -1,15 +1,20 @@
+var counterVal = document.getElementById("counter");
+var contCounter = document.querySelector(".cont-counter");
+
 socket.on('count', (count) => {
-  document.getElementById("counter").innerHTML = count.toString();
+
+  counterVal.classList.add("count-val");
+  counterVal.innerHTML = count.toString();
 
   if (count >= 0 && count < 3) {
-    document.querySelector(".cont-counter").classList.add("green");
-    document.querySelector(".cont-counter").classList.remove("yellow", "red");
+    contCounter.classList.add("green");
+    contCounter.classList.remove("yellow", "red");
   } else if (count >= 3 && count < 5) {
-    document.querySelector(".cont-counter").classList.add("yellow");
-    document.querySelector(".cont-counter").classList.remove("green", "red");
+    contCounter.classList.add("yellow");
+    contCounter.classList.remove("green", "red");
   } else if (count >= 5) {
-    document.querySelector(".cont-counter").classList.add("red");
-    document.querySelector(".cont-counter").classList.remove("green", "yellow");
+    contCounter.classList.add("red");
+    contCounter.classList.remove("green", "yellow");
   }
 
 });

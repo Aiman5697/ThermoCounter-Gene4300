@@ -2,19 +2,82 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Mosque Registration</title>
+
     <script src="/socket.io/socket.io.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon/mosque-png-45523.png">
 
   </head>
   <body>
-    <h1>Thermo Counter</h1>
-    <p id="server-time">Load Time...</p>
-
-    <div class="cont-counter">
-      <p>People inside..</p>
-      <p id="counter" class="count-val">Reading...</p>
+    <div class="cont-top">
+      <h1>Thermo Counter</h1>
+      <p id="server-time">Load Time...</p>
     </div>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-6 cont-counter">
+          <p>People inside..</p>
+          <p id="counter" class="">Reading...</p>
+        </div>
+        <div class="col-6">
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <select class="fork-select form-select-sm" aria-label=".form-select-sm example" name="">
+                  
+                </select>
+              </tr>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Imsak</th>
+                <td class="imsak">-</td>
+              </tr>
+              <tr>
+                <th scope="row">Fajr</th>
+                <td class="fajr">-</td>
+              </tr>
+              <tr>
+                <th scope="row">Syuruk</th>
+                <td class="syuruk">-</td>
+              </tr>
+              <tr>
+                <th scope="row">Dhuhr</th>
+                <td class="dhuhr">-</td>
+              </tr>
+              <tr>
+                <th scope="row">Asr</th>
+                <td class="asr">-</td>
+              </tr>
+              <tr>
+                <th scope="row">Maghrib</th>
+                <td class="maghrib">-</td>
+              </tr>
+              <tr>
+                <th scope="row">Isha</th>
+                <td class="isha">-</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
 
   <script src="signal.js"></script>
   <script src="monitor.js"></script>
