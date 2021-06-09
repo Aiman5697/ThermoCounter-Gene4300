@@ -5,19 +5,28 @@ const socketIO = require('socket.io');
 const path = require('path');
 const https = require('https');
 
+const zone = require('./zone');
+// console.log(zone);
+
 const app = express();
+
+var stateSelected = "hi";
+// var states = Object.keys(zone);
+// console.log(states);
+// if(stateSelected != "hi") {
+//   var zonesName = Object.keys(zoneDivision[stateSelected]);
+//   console.log(zonesName);
+// }
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
-const INDEX = 'public/index.html';
+// const INDEX = 'public/index.html';
 
 const server = app
-  .use((req, res) => res.sendFile(INDEX, { root: __dirname,}))
+  .use((req, res) => res.render("index", {zoneDivision: zone, stateSelected: stateSelected}))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
-
-const url = "https://www.e-solat.gov.my/index.php?r=esolatApi/TakwimSolat&period=today&zone=SGR01";
 
 const SerialPort = require("serialport");
 const Readline = require('@serialport/parser-readline');
@@ -53,13 +62,29 @@ io.on('connection', (socket) => {
     io.sockets.emit('count', count);
   });
 
-  https.get(url, function(response) {
-    console.log(response.statusCode);
 
-    response.on("data", function(data) {
+  socket.on('selectedState', function(state) {
+    console.log(state);
+    stateSelected = state.toString();
+    // var zonesCode = Object.keys(zone[stateSelected]);
+    // console.log(zonesCode);
+    // zonesCode.forEach((e,i) => {
+    //   var zoneName = zone[stateSelected][e];
+    //   console.log(zoneName);
+    // });
+  });
 
-      const waktuSolat = JSON.parse(data);
-      io.sockets.emit('prayerTime', waktuSolat);
+  socket.on('selectedZone', function(zoneCode) {
+    // console.log(zoneCode);
+
+    const url = "https://www.e-solat.gov.my/index.php?r=esolatApi/TakwimSolat&period=today&zone=" + zoneCode;
+
+    https.get(url, function(response) {
+      // console.log(response.statusCode);
+      response.on('data', function(data) {
+        const waktuSolat = JSON.parse(data);
+        io.sockets.emit('prayerTime', waktuSolat);
+      });
     });
   });
 

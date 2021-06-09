@@ -9,8 +9,25 @@ table {
   font-size: 15px;
 }
 
+footer {
+  font-size: 10px;
+  margin-top: 100px;
+}
+
+.sel {
+  margin: 0 auto 10px;
+}
+
+.selector1, .selector1 option {
+  width: 200px;
+}
+
+.selector2, .selector2 option {
+  width: 400px;
+}
+
 .cont-top {
-  margin: 20px auto;
+  margin: 35px auto;
 
 
 }

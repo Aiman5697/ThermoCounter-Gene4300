@@ -1,16 +1,52 @@
 var socket = io();
+var el = document.getElementById('server-time');
+var selector1 = document.getElementById('selector1');
+var selector2 = document.getElementById('selector2');
+
+
+selector1.addEventListener("change", function() {
+  var stateSelected = selector1.value;
+  // console.log(selector1.value);
+  socket.emit("selectedState", stateSelected);
+  document.location.href='/';
+});
+
+selector2.addEventListener("change", function() {
+  var zoneSelected = selector2.value;
+  // console.log(selector1.value);
+  socket.emit("selectedZone", zoneSelected);
+});
+
+function shortString(selector) {
+  const elements = document.querySelectorAll(selector);
+  const tail = '...';
+  if (elements && elements.length) {
+    for (const element of elements) {
+      let text = element.innerText;
+      if (element.hasAttribute('data-limit')) {
+        // console.log(element.dataset.limit);
+        if (text.length > element.dataset.limit) {
+          element.innerText = `${text.substring(0, element.dataset.limit - tail.length).trim()}${tail}`;
+        }
+      } else {
+        throw Error('Cannot find attribute \'data-limit\'');
+      }
+    }
+  }
+}
+
+window.onload = function() {
+  shortString('.short');
+};
 
 socket.on('time', function(timeString) {
   timeString = tConvert(timeString);
-  var el;
-  el = document.getElementById('server-time')
+
   el.innerHTML = 'Server time: ' + timeString;
 });
 
 socket.on('prayerTime', function(waktuSolat){
   // console.log(waktuSolat);
-  const hijri = waktuSolat.prayerTime[0].hijri;
-  const today = waktuSolat.prayerTime[0].day;
   const imsak = tConvert(waktuSolat.prayerTime[0].imsak);
   const fajr = tConvert(waktuSolat.prayerTime[0].fajr);
   const syuruk = tConvert(waktuSolat.prayerTime[0].syuruk);
@@ -27,8 +63,6 @@ socket.on('prayerTime', function(waktuSolat){
     var timeTable = document.querySelector("." + time);
     timeTable.innerHTML = array1[i];
   });
-
-
 });
 
 function tConvert (time) {

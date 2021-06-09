@@ -1,71 +1,97 @@
 <%- include("header") -%>
 
-<div class="cont-top">
-  <h1>Thermo Counter</h1>
-  <p id="server-time">Load Time...</p>
-</div>
+<main class="flex-shrink-0">
+  <div class="cont-top">
+    <h1>Thermo Counter</h1>
+    <p id="server-time">Load Time...</p>
+    <p class="col hijri"></p>
+    <p class="col today"></p>
+  </div>
 
 
-<div class="container">
-  <div class="row">
-    <div class="col-6 cont-counter">
-      <p>People inside..</p>
-      <p id="counter" class="">Reading...</p>
-    </div>
-    <div class="col-6">
-      <table class="table table-dark table-striped">
-        <thead>
-          <tr>
-            <select class="fork-select form-select-sm" aria-label=".form-select-sm example" name="">
+  <div class="container">
+    <div class="row">
+      <div class="col-6 cont-counter">
+        <p>People inside..</p>
+        <p id="counter" class="">Reading...</p>
+      </div>
+      <div class="col-6">
 
-            </select>
-          </tr>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Imsak</th>
-            <td class="imsak">-</td>
-          </tr>
-          <tr>
-            <th scope="row">Fajr</th>
-            <td class="fajr">-</td>
-          </tr>
-          <tr>
-            <th scope="row">Syuruk</th>
-            <td class="syuruk">-</td>
-          </tr>
-          <tr>
-            <th scope="row">Dhuhr</th>
-            <td class="dhuhr">-</td>
-          </tr>
-          <tr>
-            <th scope="row">Asr</th>
-            <td class="asr">-</td>
-          </tr>
-          <tr>
-            <th scope="row">Maghrib</th>
-            <td class="maghrib">-</td>
-          </tr>
-          <tr>
-            <th scope="row">Isha</th>
-            <td class="isha">-</td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="container sel">
+          <select id="selector1" class="fork-select form-select-sm col selector1" aria-label=".form-select-sm example" name="">
+            <option selected disabled>Select state</option>
+            <% if(stateSelected != "hi") { %>
+
+            <option selected><%= stateSelected %></option>
+            <% } %>
+
+            <% var statesName = Object.keys(zoneDivision) %>
+            <% statesName.forEach(function(state) { %>
+            <% if(state == stateSelected) { %>
+            <% void(0); %>
+            <% } else { %>
+            <option value="<%= state%>"><%= state %></option>
+            <% }%>
+            <% }); %>
+
+          </select>
+          <select id="selector2" class="fork-select form-select-sm col selector2" aria-label=".form-select-sm example" name="">
+            <option selected disabled data-limit="37">Select zone</option>
+            <% if(stateSelected != "hi") { %>
+            <% var zoneCodes = Object.keys(zoneDivision[stateSelected]) %>
+            <% zoneCodes.forEach(function(zoneCode, i) { %>
+            <option class="short" value="<%= zoneCode %>" data-limit="55"><%= i+1 + ". " + zoneDivision[stateSelected][zoneCode] %></option>
+            <% }); %>
+
+            <% } %>
+          </select>
+        </div>
+
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Imsak</th>
+              <td class="imsak">-</td>
+            </tr>
+            <tr>
+              <th scope="row">Fajr</th>
+              <td class="fajr">-</td>
+            </tr>
+            <tr>
+              <th scope="row">Syuruk</th>
+              <td class="syuruk">-</td>
+            </tr>
+            <tr>
+              <th scope="row">Dhuhr</th>
+              <td class="dhuhr">-</td>
+            </tr>
+            <tr>
+              <th scope="row">Asr</th>
+              <td class="asr">-</td>
+            </tr>
+            <tr>
+              <th scope="row">Maghrib</th>
+              <td class="maghrib">-</td>
+            </tr>
+            <tr>
+              <th scope="row">Isha</th>
+              <td class="isha">-</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
 
     </div>
 
   </div>
 
-</div>
-
-
-
-<script src="signal.js"></script>
-<script src="monitor.js"></script>
+</main>
 
 <%- include("footer") -%>
